@@ -1,48 +1,41 @@
 import React, { Component } from "react";
 import "./App.css";
+import { getRandomNumber } from "./Helper/utils";
+import Lottery from "./Components/Lottery";
+import { registerTicket } from "./Helper/actions";
 
 class App extends Component {
 
   constructor(props) {
     super(props);
+
     this.state = {
-      name: "",
-      email: "",
-      gender: ""
+      winningNumber: getRandomNumber(),
+      tickets: [],
+      remaningTickets: 5,
+      finished: false
     };
+
+    this.remaningTicket = registerTicket.bind(this);
   }
 
-  handleInput = (event) => {
-    this.setState({ [event.target.id]: event.target.value });
-  }
+  renderApp() {
+    const actions = {};
+    actions.registerTicket = this.remaningTicket;
 
-  handleSubmit = (event) => {
-    event.preventDefault();
-    console.log(this.state);
+    return (
+      <Lottery
+        actions={actions}
+        remaningTickets={this.state.remaningTickets} /
+      >
+    );
   }
 
   render() {
+    console.log(this.state.tickets);
     return (
       <div className="App">
-        <form onSubmit={this.handleSubmit}>
-          <input id="name" value={this.state.name} onChange={this.handleInput} type="text" placeholder="Име" autoComplete="off" />
-          <input id="email" value={this.state.email} onChange={this.handleInput} type="text" placeholder="Имейл" autoComplete="off" />
-          <br />
-          <select id="gender" value={this.state.gender} onChange={this.handleInput}>
-            <option value=""></option>
-            <option value="мъж">Мъж</option>
-            <option value="жена">Жена</option>
-          </select>
-          <br />
-          <br />
-          <input type="submit" value="Потвърди" />
-        </form>
-        <hr />
-        <div className="result">
-          <p>Име: <b>{this.state.name}</b></p>
-          <p>Имейл: <b>{this.state.email}</b></p>
-          <p>Пол: <b>{this.state.gender}</b></p>
-        </div>
+        {this.renderApp()}
       </div>
     );
   }
