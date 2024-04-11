@@ -1,9 +1,9 @@
-import { getRandomNumber } from "./utils";
+import { getRandomColor, getRandomNumber } from "./utils";
 
 export function registerTicket() {
     const newTicket = {
         number: getRandomNumber(),
-        color: "red"
+        color: getRandomColor()
     };
 
     this.setState((prevState) => {
