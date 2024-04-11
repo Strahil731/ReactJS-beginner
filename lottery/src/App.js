@@ -3,6 +3,7 @@ import "./App.css";
 import { getRandomNumber } from "./Helper/utils";
 import Lottery from "./Components/Lottery";
 import { registerTicket } from "./Helper/actions";
+import { removeTicket } from "./Helper/actions";
 
 class App extends Component {
 
@@ -16,17 +17,20 @@ class App extends Component {
       finished: false
     };
 
-    this.remaningTicket = registerTicket.bind(this);
+    this.registerTicket = registerTicket.bind(this);
+    this.removeTicket = removeTicket.bind(this);
   }
 
   renderApp() {
+    const { tickets, remaningTickets } = this.state;
     const actions = {};
-    actions.registerTicket = this.remaningTicket;
+    actions.registerTicket = this.registerTicket;
 
     return (
       <Lottery
         actions={actions}
-        remaningTickets={this.state.remaningTickets} /
+        tickets={tickets}
+        remaningTickets={remaningTickets} /
       >
     );
   }
